@@ -1,27 +1,36 @@
 import './Experience.css'
 
-const experiences = [
+const logs = [
   {
-    company: 'Accenture',
-    roles: 'Machine Learning Engineer | MLOps Engineer | GenAI Engineer',
-    period: 'Jan 2025 – Present',
-    bullets: [
-      'Built production RAG systems handling 100+ concurrent queries with 99.5%+ uptime using LangChain and Pinecone',
-      'Architected MLOps infrastructure with Kubernetes, Docker, and CI/CD pipelines with automated testing',
-      'Improved user satisfaction 25-30% through A/B testing and evaluation framework design',
+    timestamp: '2025-01-15 09:00:00',
+    level: 'INFO',
+    company: 'Joined Accenture',
+    details: [
+      { prefix: '├─', text: 'Role: ML Engineer | MLOps | GenAI Engineer' },
+      { prefix: '├─', text: 'Built production RAG: 100+ concurrent queries, 99.5% uptime' },
+      { prefix: '├─', text: 'Architected K8s + Docker CI/CD infrastructure' },
+      { prefix: '└─', text: 'Impact: +25-30% user satisfaction via A/B testing', highlight: true },
     ],
-    color: '#8b5cf6',
   },
   {
-    company: 'Harman International',
-    roles: 'Machine Learning Engineer | MLOps Engineer | Data Scientist',
-    period: 'Jan 2021 – Jul 2023',
-    bullets: [
-      'Built PySpark pipelines processing 1TB+ daily IoT data, reducing ETL latency from 4 hours to 2 minutes',
-      'Deployed ML models (CNNs, XGBoost, collaborative filtering) across 50,000+ connected vehicles',
-      'Improved anomaly detection accuracy from 71% to 84% and drowsiness detection from 71% to 82%',
+    timestamp: '2023-08-20 09:00:00',
+    level: 'INFO',
+    company: 'University of North Texas — M.S. Data Science',
+    details: [
+      { prefix: '└─', text: 'Graduated May 2025' },
     ],
-    color: '#06d6a0',
+    isEducation: true,
+  },
+  {
+    timestamp: '2021-01-10 09:00:00',
+    level: 'INFO',
+    company: 'Joined Harman International',
+    details: [
+      { prefix: '├─', text: 'Role: ML Engineer | MLOps | Data Scientist' },
+      { prefix: '├─', text: 'PySpark pipelines: 1TB/day IoT processing' },
+      { prefix: '├─', text: 'Deployed ML to 50,000+ connected vehicles' },
+      { prefix: '└─', text: 'Accuracy: 71% → 84% anomaly detection', highlight: true },
+    ],
   },
 ]
 
@@ -30,36 +39,35 @@ function Experience() {
     <section id="experience" className="section experience">
       <div className="container">
         <div className="animate-on-scroll">
-          <span className="section-label">Experience</span>
-          <h2 className="section-title">Where I've <span className="gradient-text">Worked</span></h2>
-          <p className="section-subtitle">
-            Building production AI systems at industry-leading companies.
-          </p>
+          <span className="section-label">system.log</span>
+          <h2 className="section-title">System <span style={{ color: 'var(--cyan)' }}>Logs</span></h2>
         </div>
-        <div className="timeline">
-          {experiences.map((exp, index) => (
-            <div
-              key={exp.company}
-              className="timeline-item animate-on-scroll"
-              style={{ transitionDelay: `${index * 0.15}s` }}
-            >
-              <div className="timeline-marker" style={{ background: exp.color }}></div>
-              <div className="timeline-card glass-card">
-                <div className="timeline-header">
-                  <div>
-                    <h3 className="timeline-company">{exp.company}</h3>
-                    <p className="timeline-roles">{exp.roles}</p>
-                  </div>
-                  <span className="timeline-period">{exp.period}</span>
-                </div>
-                <ul className="timeline-bullets">
-                  {exp.bullets.map((bullet, i) => (
-                    <li key={i}>{bullet}</li>
-                  ))}
-                </ul>
-              </div>
+        <div className="log-viewer sys-card animate-on-scroll">
+          <div className="log-header">
+            <div className="editor-dots">
+              <span className="dot dot-red"></span>
+              <span className="dot dot-yellow"></span>
+              <span className="dot dot-green"></span>
             </div>
-          ))}
+            <span className="log-title">experience.log — tail -f</span>
+          </div>
+          <div className="log-body">
+            {logs.map((log, i) => (
+              <div key={i} className={`log-entry ${log.isEducation ? 'log-education' : ''}`}>
+                <div className="log-main">
+                  <span className="log-ts">[{log.timestamp}]</span>
+                  <span className={`log-level log-level--${log.level.toLowerCase()}`}>{log.level}:</span>
+                  <span className="log-company">{log.company}</span>
+                </div>
+                {log.details.map((d, j) => (
+                  <div key={j} className="log-detail">
+                    <span className="log-tree">{d.prefix}</span>
+                    <span className={d.highlight ? 'log-highlight' : ''}>{d.text}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

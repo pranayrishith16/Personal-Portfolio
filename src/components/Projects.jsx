@@ -4,59 +4,119 @@ import './Projects.css'
 const projects = [
   {
     title: 'Legal Document RAG System',
-    color: '#8b5cf6',
-    problem: 'Legal teams spent hours manually searching 5,000+ documents to find relevant clauses — slow, error-prone, expensive.',
-    solution: 'Built an end-to-end RAG pipeline with LangChain and Pinecone vector search. Claude API handles clause analysis with sub-second retrieval across the full corpus.',
-    impact: [
-      { metric: '94%', label: 'Retrieval accuracy', baseline: 'vs ~60% keyword search' },
-      { metric: '5K+', label: 'Documents indexed' },
-      { metric: '<1s', label: 'Query response' },
+    type: 'GenAI · RAG Pipeline',
+    status: 'PRODUCTION',
+    statusColor: '#00ff88',
+    metrics: [
+      { label: 'Accuracy', value: '94%' },
+      { label: 'Response', value: '<1s' },
+      { label: 'Documents', value: '5K+' },
+      { label: 'Queries/sec', value: '100+' },
     ],
-    stack: ['LangChain', 'Pinecone', 'Claude API', 'OpenRouter', 'FastAPI', 'Docker'],
+    stack: ['LangChain', 'Pinecone', 'Claude', 'FastAPI', 'Docker'],
+    diagram: (
+      <svg viewBox="0 0 540 70" className="arch-diagram">
+        <defs><marker id="arr1" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#00d4ff"/></marker></defs>
+        <rect x="0" y="20" width="80" height="30" rx="4" fill="none" stroke="#4a5568" strokeWidth="1"/>
+        <text x="40" y="40" textAnchor="middle" fill="#8892b0" fontSize="9" fontFamily="var(--font-mono)">User Query</text>
+        <line x1="80" y1="35" x2="110" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr1)"/>
+        <rect x="110" y="20" width="70" height="30" rx="4" fill="none" stroke="#00d4ff" strokeWidth="1"/>
+        <text x="145" y="40" textAnchor="middle" fill="#00d4ff" fontSize="9" fontFamily="var(--font-mono)">FastAPI</text>
+        <line x1="180" y1="35" x2="210" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr1)"/>
+        <rect x="210" y="20" width="80" height="30" rx="4" fill="none" stroke="#8b5cf6" strokeWidth="1"/>
+        <text x="250" y="40" textAnchor="middle" fill="#a78bfa" fontSize="9" fontFamily="var(--font-mono)">Pinecone</text>
+        <line x1="290" y1="35" x2="320" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr1)"/>
+        <rect x="320" y="20" width="80" height="30" rx="4" fill="none" stroke="#00ff88" strokeWidth="1"/>
+        <text x="360" y="40" textAnchor="middle" fill="#00ff88" fontSize="9" fontFamily="var(--font-mono)">LangChain</text>
+        <line x1="400" y1="35" x2="430" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr1)"/>
+        <rect x="430" y="20" width="80" height="30" rx="4" fill="none" stroke="#ffaa00" strokeWidth="1"/>
+        <text x="470" y="40" textAnchor="middle" fill="#ffaa00" fontSize="9" fontFamily="var(--font-mono)">Claude</text>
+      </svg>
+    ),
     deepDive: [
-      'Chunked documents using recursive text splitting with 512-token windows and 50-token overlap',
-      'Embedded with sentence-transformers (all-MiniLM-L6-v2) into Pinecone serverless index',
-      'Built LCEL retrieval chain with Claude 3.5 Sonnet for clause interpretation',
-      'FastAPI backend with async endpoints, rate limiting, and request caching',
-      'Dockerized deployment with health checks and structured logging',
-    ],
-  },
-  {
-    title: 'AI Agent for Multi-Step Reasoning',
-    color: '#06d6a0',
-    problem: 'Complex business queries required chaining multiple data sources and analysis steps — impossible to automate with simple prompt-response patterns.',
-    solution: 'Designed an agentic system using LangGraph with tool-use capabilities, enabling autonomous multi-step reasoning across structured and unstructured data sources.',
-    impact: [
-      { metric: '3x', label: 'Faster analysis', baseline: 'Hours → minutes per query' },
-      { metric: '85%', label: 'Task automation' },
-      { metric: '10+', label: 'Tool integrations' },
-    ],
-    stack: ['LangGraph', 'LangChain', 'Python', 'OpenAI', 'RAG', 'FastAPI'],
-    deepDive: [
-      'LangGraph state machine with conditional edges for dynamic tool selection',
-      'Integrated 10+ tools: SQL queries, API calls, document retrieval, code execution',
-      'Implemented retry logic, fallback chains, and human-in-the-loop checkpoints',
-      'Token-aware context management to stay within LLM context windows',
-      'Evaluation framework using LLM-as-judge for response quality scoring',
+      'Recursive text splitting: 512-token chunks, 50-token overlap',
+      'sentence-transformers embedding → Pinecone serverless index',
+      'LCEL retrieval chain with Claude 3.5 Sonnet via OpenRouter',
+      'FastAPI async endpoints with rate limiting & caching',
+      'Dockerized on AWS ECS with health checks',
     ],
   },
   {
     title: 'IoT Anomaly Detection at Scale',
-    color: '#ec4899',
-    problem: 'Vehicle anomaly detection running at 71% accuracy with 4-hour ETL latency — not viable for real-time safety systems serving 50K+ cars.',
-    solution: 'Built PySpark pipelines processing 1TB+ daily IoT data and deployed optimized ML models (CNNs, XGBoost) across the connected vehicle fleet with edge inference.',
-    impact: [
-      { metric: '71→84%', label: 'Anomaly accuracy', baseline: '+13% improvement' },
-      { metric: '4h→2m', label: 'ETL latency', baseline: '120x faster' },
-      { metric: '50K+', label: 'Vehicles deployed' },
+    type: 'Edge AI · Data Pipeline',
+    status: 'PRODUCTION',
+    statusColor: '#00ff88',
+    metrics: [
+      { label: 'Accuracy', value: '84%' },
+      { label: 'ETL', value: '2min' },
+      { label: 'Data/day', value: '1TB+' },
+      { label: 'Devices', value: '50K+' },
     ],
-    stack: ['PySpark', 'CNNs', 'XGBoost', 'IoT', 'TensorFlow Lite', 'Edge Computing'],
+    stack: ['PySpark', 'XGBoost', 'CNNs', 'TF Lite', 'Edge'],
+    diagram: (
+      <svg viewBox="0 0 540 70" className="arch-diagram">
+        <defs><marker id="arr2" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#00d4ff"/></marker></defs>
+        <rect x="0" y="20" width="80" height="30" rx="4" fill="none" stroke="#ffaa00" strokeWidth="1"/>
+        <text x="40" y="40" textAnchor="middle" fill="#ffaa00" fontSize="9" fontFamily="var(--font-mono)">50K Cars</text>
+        <line x1="80" y1="35" x2="110" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr2)"/>
+        <rect x="110" y="20" width="80" height="30" rx="4" fill="none" stroke="#4a5568" strokeWidth="1"/>
+        <text x="150" y="40" textAnchor="middle" fill="#8892b0" fontSize="9" fontFamily="var(--font-mono)">IoT Stream</text>
+        <line x1="190" y1="35" x2="220" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr2)"/>
+        <rect x="220" y="20" width="80" height="30" rx="4" fill="none" stroke="#00d4ff" strokeWidth="1"/>
+        <text x="260" y="40" textAnchor="middle" fill="#00d4ff" fontSize="9" fontFamily="var(--font-mono)">PySpark</text>
+        <line x1="300" y1="35" x2="330" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr2)"/>
+        <rect x="330" y="20" width="80" height="30" rx="4" fill="none" stroke="#00ff88" strokeWidth="1"/>
+        <text x="370" y="40" textAnchor="middle" fill="#00ff88" fontSize="9" fontFamily="var(--font-mono)">ML Models</text>
+        <line x1="410" y1="35" x2="440" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr2)"/>
+        <rect x="440" y="20" width="80" height="30" rx="4" fill="none" stroke="#ff6b6b" strokeWidth="1"/>
+        <text x="480" y="40" textAnchor="middle" fill="#ff6b6b" fontSize="9" fontFamily="var(--font-mono)">Edge Deploy</text>
+      </svg>
+    ),
     deepDive: [
-      'PySpark ETL on AWS EMR processing CAN bus + OBD-II sensor streams',
-      'Feature engineering: rolling window stats, FFT frequency features, signal correlations',
-      'ResNet-18 CNN for image-based anomaly patterns, XGBoost for tabular features',
-      'TensorFlow Lite INT8 quantization for ARM Cortex-A edge deployment',
-      'Drowsiness detection model improved from 71% to 82% using transfer learning',
+      'PySpark ETL on AWS EMR: CAN bus + OBD-II sensor streams',
+      'Feature engineering: rolling windows, FFT, signal correlations',
+      'ResNet-18 CNN + XGBoost ensemble for anomaly classification',
+      'TF Lite INT8 quantization for ARM Cortex-A deployment',
+      'Drowsiness detection improved 71% → 82% via transfer learning',
+    ],
+  },
+  {
+    title: 'AI Agent for Multi-Step Reasoning',
+    type: 'GenAI · Agentic System',
+    status: 'PRODUCTION',
+    statusColor: '#00ff88',
+    metrics: [
+      { label: 'Speed', value: '3x' },
+      { label: 'Automation', value: '85%' },
+      { label: 'Tools', value: '10+' },
+      { label: 'Accuracy', value: '92%' },
+    ],
+    stack: ['LangGraph', 'LangChain', 'OpenAI', 'RAG', 'FastAPI'],
+    diagram: (
+      <svg viewBox="0 0 540 70" className="arch-diagram">
+        <defs><marker id="arr3" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto"><polygon points="0 0, 6 2, 0 4" fill="#00d4ff"/></marker></defs>
+        <rect x="0" y="20" width="80" height="30" rx="4" fill="none" stroke="#4a5568" strokeWidth="1"/>
+        <text x="40" y="40" textAnchor="middle" fill="#8892b0" fontSize="9" fontFamily="var(--font-mono)">Query</text>
+        <line x1="80" y1="35" x2="110" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr3)"/>
+        <rect x="110" y="20" width="80" height="30" rx="4" fill="none" stroke="#00ff88" strokeWidth="1"/>
+        <text x="150" y="40" textAnchor="middle" fill="#00ff88" fontSize="9" fontFamily="var(--font-mono)">LangGraph</text>
+        <line x1="190" y1="35" x2="220" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr3)"/>
+        <rect x="220" y="20" width="80" height="30" rx="4" fill="none" stroke="#ffaa00" strokeWidth="1"/>
+        <text x="260" y="40" textAnchor="middle" fill="#ffaa00" fontSize="9" fontFamily="var(--font-mono)">10+ Tools</text>
+        <line x1="300" y1="35" x2="330" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr3)"/>
+        <rect x="330" y="20" width="80" height="30" rx="4" fill="none" stroke="#00d4ff" strokeWidth="1"/>
+        <text x="370" y="40" textAnchor="middle" fill="#00d4ff" fontSize="9" fontFamily="var(--font-mono)">Reasoning</text>
+        <line x1="410" y1="35" x2="440" y2="35" stroke="#00d4ff" strokeWidth="1" markerEnd="url(#arr3)"/>
+        <rect x="440" y="20" width="80" height="30" rx="4" fill="none" stroke="#a78bfa" strokeWidth="1"/>
+        <text x="480" y="40" textAnchor="middle" fill="#a78bfa" fontSize="9" fontFamily="var(--font-mono)">Response</text>
+      </svg>
+    ),
+    deepDive: [
+      'LangGraph state machine with conditional edges for tool routing',
+      'Integrated SQL, API, document retrieval, and code execution tools',
+      'Retry logic, fallback chains, human-in-the-loop checkpoints',
+      'Token-aware context management within LLM windows',
+      'LLM-as-judge evaluation framework for quality scoring',
     ],
   },
 ]
@@ -68,76 +128,52 @@ function Projects() {
     <section id="projects" className="section projects">
       <div className="container">
         <div className="animate-on-scroll">
-          <span className="section-label">Projects</span>
-          <h2 className="section-title">Case <span className="gradient-text">Studies</span></h2>
-          <p className="section-subtitle">
-            Production systems with measurable impact — not toy projects.
-          </p>
+          <span className="section-label">deployments</span>
+          <h2 className="section-title">Production <span style={{ color: 'var(--cyan)' }}>Systems</span></h2>
+          <p className="section-subtitle">Systems I've built, deployed, and monitored in production.</p>
         </div>
 
-        <div className="case-studies">
-          {projects.map((project, index) => (
-            <div
-              key={project.title}
-              className={`case-study animate-on-scroll ${expanded === index ? 'expanded' : ''}`}
-              style={{ '--project-color': project.color, transitionDelay: `${index * 0.1}s` }}
-            >
-              <div className="case-study-accent" style={{ background: project.color }}></div>
-              <div className="case-study-body">
-                <h3 className="case-study-title">{project.title}</h3>
-
-                <div className="case-study-sections">
-                  <div className="case-section">
-                    <span className="case-label">Problem</span>
-                    <p>{project.problem}</p>
-                  </div>
-                  <div className="case-section">
-                    <span className="case-label">Solution</span>
-                    <p>{project.solution}</p>
-                  </div>
+        <div className="sys-cards">
+          {projects.map((p, i) => (
+            <div key={p.title} className="sys-project-card sys-card animate-on-scroll" style={{ transitionDelay: `${i * 0.1}s` }}>
+              <div className="spc-header">
+                <div className="spc-status">
+                  <span className="status-badge status-badge--live">{p.status}</span>
+                  <span className="spc-type">{p.type}</span>
                 </div>
+                <h3 className="spc-title">{p.title}</h3>
+              </div>
 
-                <div className="case-metrics">
-                  {project.impact.map((m) => (
-                    <div key={m.label} className="case-metric">
-                      <span className="case-metric-value" style={{ color: project.color }}>{m.metric}</span>
-                      <span className="case-metric-label">{m.label}</span>
-                      {m.baseline && <span className="case-metric-baseline">{m.baseline}</span>}
+              <div className="spc-diagram">{p.diagram}</div>
+
+              <div className="spc-metrics">
+                {p.metrics.map(m => (
+                  <div key={m.label} className="spc-metric">
+                    <span className="spc-metric-val">{m.value}</span>
+                    <span className="spc-metric-lbl">{m.label}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="spc-stack">
+                {p.stack.map(t => <span key={t} className="spc-tag">{t}</span>)}
+              </div>
+
+              <div className="spc-actions">
+                <button className="spc-details-btn" onClick={() => setExpanded(expanded === i ? null : i)}>
+                  {expanded === i ? '[ Hide ]' : '[ Details ↓ ]'}
+                </button>
+              </div>
+
+              {expanded === i && (
+                <div className="spc-deep-dive">
+                  {p.deepDive.map((d, j) => (
+                    <div key={j} className="spc-dd-line">
+                      <span className="spc-dd-bullet">▸</span> {d}
                     </div>
                   ))}
                 </div>
-
-                <div className="case-stack">
-                  {project.stack.map((tech) => (
-                    <span key={tech} className="case-stack-tag">{tech}</span>
-                  ))}
-                </div>
-
-                <button
-                  className="case-expand-btn"
-                  onClick={() => setExpanded(expanded === index ? null : index)}
-                >
-                  {expanded === index ? 'Hide Details' : 'View Architecture Details'}
-                  <svg
-                    width="16" height="16" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-                    className={expanded === index ? 'chevron-up' : ''}
-                  >
-                    <polyline points="6 9 12 15 18 9"/>
-                  </svg>
-                </button>
-
-                {expanded === index && (
-                  <div className="case-deep-dive">
-                    <span className="case-label">Technical Implementation</span>
-                    <ul>
-                      {project.deepDive.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           ))}
         </div>

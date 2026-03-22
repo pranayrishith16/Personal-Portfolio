@@ -2,19 +2,17 @@ import { useState, useEffect } from 'react'
 import './Navbar.css'
 
 const navLinks = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'education', label: 'Education' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'home', label: 'home' },
+  { id: 'about', label: 'about' },
+  { id: 'experience', label: 'logs' },
+  { id: 'skills', label: 'skills' },
+  { id: 'projects', label: 'systems' },
+  { id: 'contact', label: 'connect' },
 ]
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState('home')
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,7 +31,6 @@ function Navbar() {
   }, [])
 
   const handleClick = (id) => {
-    setMenuOpen(false)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -41,17 +38,9 @@ function Navbar() {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <a className="navbar-logo" href="#home" onClick={() => handleClick('home')}>
-          <span className="logo-text">PR</span>
-          <span className="logo-dot">.</span>
+          <span className="logo-bracket">[</span>PRB<span className="logo-bracket">]</span>
         </a>
-        <button
-          className={`menu-toggle ${menuOpen ? 'open' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span></span><span></span><span></span>
-        </button>
-        <ul className={`navbar-links ${menuOpen ? 'open' : ''}`}>
+        <ul className="navbar-links">
           {navLinks.map(link => (
             <li key={link.id}>
               <a
