@@ -1,7 +1,7 @@
 .contact-wrapper {
   text-align: center;
   position: relative;
-  padding: 60px 0;
+  padding: 40px 0;
 }
 .contact-glow {
   position: absolute;
@@ -10,53 +10,43 @@
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 .contact-description {
   font-size: 1.1rem;
   color: var(--text-secondary);
-  max-width: 500px;
-  margin: 0 auto 48px;
+  max-width: 520px;
+  margin: 0 auto 40px;
   line-height: 1.8;
+}
+.contact-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
 }
 .contact-links {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
 }
 .contact-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
-  padding: 20px 28px;
-  text-decoration: none;
-  text-align: left;
-  min-width: 260px;
-}
-.contact-link-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 214, 160, 0.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--accent-purple-light);
-  flex-shrink: 0;
-}
-.contact-link-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 2px;
-}
-.contact-link-value {
+  gap: 8px;
   font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+.contact-link:hover {
   color: var(--text-primary);
-  font-weight: 500;
+  background: rgba(255, 255, 255, 0.04);
 }
 .footer {
   padding: 40px 0;
@@ -74,5 +64,4 @@
 }
 @media (max-width: 768px) {
   .contact-links { flex-direction: column; align-items: center; }
-  .contact-link { width: 100%; max-width: 340px; }
 }
