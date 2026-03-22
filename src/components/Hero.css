@@ -50,6 +50,20 @@
   text-align: center;
 }
 
+.hero-name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #a78bfa, #06d6a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.8s ease both;
+}
+
 .hero-headline {
   font-family: var(--font-heading);
   font-size: clamp(2.2rem, 6vw, 4rem);

@@ -14,6 +14,7 @@ function Hero() {
       </div>
 
       <div className="hero-content container">
+        <p className="hero-name">Pranay Rishith Bondugula</p>
         <h1 className="hero-headline">
           I build production ML systems<br />
           <span className="gradient-text">that actually ship.</span>
