@@ -1,6 +1,54 @@
+import { useState } from 'react'
 import './Hero.css'
 
+const heroStats = [
+  {
+    value: '99.5%',
+    label: 'System Uptime',
+    color: '#06d6a0',
+    bgColor: 'rgba(6, 214, 160, 0.12)',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    ),
+    story: 'Production RAG system at Accenture — 3 months, zero downtime incidents',
+    context: 'Beats industry SLA standard of 99.0%',
+  },
+  {
+    value: '1TB/day',
+    label: 'Data Processed',
+    color: '#a78bfa',
+    bgColor: 'rgba(139, 92, 246, 0.12)',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+      </svg>
+    ),
+    story: 'PySpark pipelines at Harman — IoT telemetry from 50K connected vehicles',
+    context: 'Cut ETL latency from 4 hours → 2 minutes',
+  },
+  {
+    value: '50K+',
+    label: 'Devices Deployed',
+    color: '#ec4899',
+    bgColor: 'rgba(236, 72, 153, 0.12)',
+    icon: (
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+        <path d="M16 3h-8l-2 4h12z"/>
+      </svg>
+    ),
+    story: 'ML models (CNNs, XGBoost) running on edge devices across vehicle fleet',
+    context: 'Anomaly detection accuracy: 71% → 84%',
+  },
+]
+
 function Hero() {
+  const [hovered, setHovered] = useState(null)
+
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -10,7 +58,6 @@ function Hero() {
       <div className="hero-bg">
         <div className="hero-orb hero-orb-1"></div>
         <div className="hero-orb hero-orb-2"></div>
-        <div className="hero-grid"></div>
       </div>
 
       <div className="hero-content container">
@@ -21,40 +68,31 @@ function Hero() {
         </h1>
 
         <div className="hero-stats">
-          <div className="hero-stat-card">
-            <div className="hero-stat-icon" style={{ background: 'rgba(6, 214, 160, 0.12)', color: '#06d6a0' }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
+          {heroStats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className="hero-stat-card"
+              onMouseEnter={() => setHovered(index)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              {hovered === index && (
+                <div className="stat-tooltip">
+                  <p className="stat-story">{stat.story}</p>
+                  <p className="stat-context">{stat.context}</p>
+                </div>
+              )}
+              <div className="hero-stat-icon" style={{ background: stat.bgColor, color: stat.color }}>
+                {stat.icon}
+              </div>
+              <span className="hero-stat-value">{stat.value}</span>
+              <span className="hero-stat-label">{stat.label}</span>
             </div>
-            <span className="hero-stat-value">99.5%</span>
-            <span className="hero-stat-label">System Uptime</span>
-          </div>
-          <div className="hero-stat-card">
-            <div className="hero-stat-icon" style={{ background: 'rgba(139, 92, 246, 0.12)', color: '#a78bfa' }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <ellipse cx="12" cy="5" rx="9" ry="3"/>
-                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
-                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
-              </svg>
-            </div>
-            <span className="hero-stat-value">1TB/day</span>
-            <span className="hero-stat-label">Data Processed</span>
-          </div>
-          <div className="hero-stat-card">
-            <div className="hero-stat-icon" style={{ background: 'rgba(236, 72, 153, 0.12)', color: '#ec4899' }}>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
-                <path d="M16 3h-8l-2 4h12z"/>
-              </svg>
-            </div>
-            <span className="hero-stat-value">50K+</span>
-            <span className="hero-stat-label">Devices Deployed</span>
-          </div>
+          ))}
         </div>
 
         <p className="hero-proof">
-          4 years turning AI research into revenue at <strong>Accenture</strong> and <strong>Harman International</strong>.
+          4 years shipping ML that <strong>50K+ devices</strong> run daily — from
+          RAG systems at <strong>Accenture</strong> to edge AI at <strong>Harman International</strong>.
         </p>
 
         <div className="hero-cta">

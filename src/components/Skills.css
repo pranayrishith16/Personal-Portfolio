@@ -53,7 +53,7 @@
   gap: 8px;
 }
 
-/* Tier 0 — Core: large, bold tags */
+/* Tier 0 — Core: large, bold */
 .skill-tier-0 .tier-tag {
   padding: 8px 18px;
   border-radius: 10px;
@@ -63,14 +63,27 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: var(--transition-fast);
+  position: relative;
+  overflow: hidden;
 }
 .skill-tier-0 .tier-tag:hover {
   background: color-mix(in srgb, var(--cat-color) 15%, transparent);
   border-color: color-mix(in srgb, var(--cat-color) 30%, transparent);
   transform: translateY(-2px);
 }
+.skill-tier-0 .tier-tag::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+  transform: scale(0);
+  transition: transform 0.4s ease;
+}
+.skill-tier-0 .tier-tag:active::after {
+  transform: scale(1);
+}
 
-/* Tier 1 — Proficient: medium tags */
+/* Tier 1 — Proficient: medium */
 .skill-tier-1 .tier-tag {
   padding: 6px 14px;
   border-radius: 8px;
@@ -87,7 +100,7 @@
   border-color: color-mix(in srgb, var(--cat-color) 20%, transparent);
 }
 
-/* Tier 2 — Familiar: small, muted tags */
+/* Tier 2 — Familiar: small, muted */
 .skill-tier-2 .tier-tag {
   padding: 4px 12px;
   border-radius: 6px;
@@ -103,12 +116,59 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* ===== CURRENTLY EXPLORING ===== */
+.currently-exploring {
+  margin-top: 64px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.exploring-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.exploring-badge {
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(6, 214, 160, 0.1);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 214, 160, 0.2);
+  letter-spacing: 0.5px;
+}
+.exploring-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.exploring-card {
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.exploring-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.exploring-card h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.exploring-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 @media (max-width: 768px) {
   .tier-category {
     flex-direction: column;
     gap: 10px;
   }
-  .tier-category-name {
-    min-width: auto;
-  }
+  .tier-category-name { min-width: auto; }
+  .exploring-grid { grid-template-columns: 1fr; }
 }

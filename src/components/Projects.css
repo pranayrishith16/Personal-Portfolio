@@ -16,7 +16,7 @@
 .case-study:hover {
   border-color: color-mix(in srgb, var(--project-color) 25%, transparent);
   box-shadow: 0 8px 40px color-mix(in srgb, var(--project-color) 10%, transparent);
-  transform: translateY(-2px);
+  transform: translateX(4px);
 }
 .case-study-accent {
   width: 4px;
@@ -37,7 +37,6 @@
   gap: 24px;
   margin-bottom: 28px;
 }
-.case-section {}
 .case-label {
   display: inline-block;
   font-size: 0.75rem;
@@ -79,12 +78,19 @@
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+.case-metric-baseline {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  font-weight: 500;
+  margin-top: 2px;
+}
 
 /* ===== Stack ===== */
 .case-stack {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 20px;
 }
 .case-stack-tag {
   padding: 5px 14px;
@@ -94,6 +100,62 @@
   color: var(--text-secondary);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ===== Expand Button ===== */
+.case-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--accent-purple-light);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: var(--transition-fast);
+}
+.case-expand-btn:hover {
+  color: var(--accent-cyan);
+}
+.case-expand-btn svg {
+  transition: transform 0.3s ease;
+}
+.case-expand-btn .chevron-up {
+  transform: rotate(180deg);
+}
+
+/* ===== Deep Dive ===== */
+.case-deep-dive {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  animation: fadeInUp 0.3s ease both;
+}
+.case-deep-dive ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.case-deep-dive li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.case-deep-dive li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
 }
 
 @media (max-width: 768px) {

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import Constellation from './components/Constellation'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -30,6 +31,7 @@ function App() {
 
   return (
     <>
+      <Constellation />
       <Navbar />
       <main>
         <Hero />

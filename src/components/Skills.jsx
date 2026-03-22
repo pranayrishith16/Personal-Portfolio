@@ -51,6 +51,12 @@ const tiers = [
   },
 ]
 
+const currentlyExploring = [
+  { tech: 'Anthropic MCP', reason: 'Building custom AI tool integrations', icon: '🔌' },
+  { tech: 'Multi-Agent Systems', reason: 'Orchestrating autonomous AI workflows', icon: '🤖' },
+  { tech: 'MLX (Apple Silicon)', reason: 'Local LLM inference optimization', icon: '⚡' },
+]
+
 function Skills() {
   return (
     <section id="skills" className="section skills">
@@ -83,6 +89,24 @@ function Skills() {
             </div>
           </div>
         ))}
+
+        <div className="currently-exploring animate-on-scroll">
+          <div className="exploring-header">
+            <h3 className="tier-label">Currently Exploring</h3>
+            <span className="exploring-badge">2026</span>
+          </div>
+          <div className="exploring-grid">
+            {currentlyExploring.map((item) => (
+              <div key={item.tech} className="exploring-card glass-card">
+                <span className="exploring-icon">{item.icon}</span>
+                <div>
+                  <h4>{item.tech}</h4>
+                  <p>{item.reason}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
