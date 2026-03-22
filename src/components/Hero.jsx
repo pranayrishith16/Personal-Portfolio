@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Sparkline from './shared/Sparkline'
 import './Hero.css'
 
@@ -11,33 +11,42 @@ const bootLines = [
 ]
 
 const metrics = [
-  {
-    value: '99.5%',
-    label: 'Uptime',
-    trend: '+1.4%',
-    data: [96.2, 97.1, 97.8, 98.1, 98.4, 99.0, 99.2, 99.5, 99.5, 99.6],
-    color: '#00ff88',
-  },
-  {
-    value: '1.2TB',
-    label: 'Data/Day',
-    trend: '+340GB',
-    data: [0.4, 0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 1.0, 1.1, 1.2],
-    color: '#00d4ff',
-  },
-  {
-    value: '50K+',
-    label: 'Devices',
-    trend: '+12K',
-    data: [8, 15, 22, 28, 33, 38, 42, 45, 48, 52],
-    color: '#ffaa00',
-  },
+  { target: 99.5, suffix: '%', label: 'Uptime', trend: '+1.4%', data: [96.2,97.1,97.8,98.1,98.4,99.0,99.2,99.5,99.5,99.6], color: '#00ff88', decimals: 1, story: 'Production RAG at Accenture — 3 months, zero incidents', context: 'Beats industry SLA of 99.0%' },
+  { target: 1.2, suffix: 'TB', label: 'Data/Day', trend: '+340GB', data: [0.4,0.5,0.6,0.7,0.8,0.85,0.9,1.0,1.1,1.2], color: '#00d4ff', decimals: 1, story: 'PySpark pipelines at Harman — IoT from 50K vehicles', context: 'ETL: 4 hours → 2 minutes' },
+  { target: 50, suffix: 'K+', label: 'Devices', trend: '+12K', data: [8,15,22,28,33,38,42,45,48,52], color: '#ffaa00', decimals: 0, story: 'ML models (CNNs, XGBoost) on edge devices', context: 'Anomaly accuracy: 71% → 84%' },
 ]
 
+function CountUp({ target, suffix, decimals, color, delay = 0 }) {
+  const [value, setValue] = useState(0)
+  const [started, setStarted] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setStarted(true), delay)
+    return () => clearTimeout(t)
+  }, [delay])
+
+  useEffect(() => {
+    if (!started) return
+    const duration = 1200
+    const startTime = performance.now()
+    const animate = (now) => {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3)
+      setValue(eased * target)
+      if (progress < 1) requestAnimationFrame(animate)
+    }
+    requestAnimationFrame(animate)
+  }, [started, target])
+
+  return <span className="metric-value" style={{ color }}>{value.toFixed(decimals)}{suffix}</span>
+}
+
 function Hero() {
-  const [bootPhase, setBootPhase] = useState(0) // 0=booting, 1=dashboard
+  const [bootPhase, setBootPhase] = useState(0)
   const [visibleLines, setVisibleLines] = useState(0)
   const [glitch, setGlitch] = useState(false)
+  const [hovered, setHovered] = useState(null)
 
   useEffect(() => {
     if (bootPhase === 0) {
@@ -95,13 +104,24 @@ function Hero() {
           </p>
 
           <div className="dash-metrics">
-            {metrics.map((m) => (
-              <div key={m.label} className="metric-card sys-card">
+            {metrics.map((m, i) => (
+              <div
+                key={m.label}
+                className="metric-card sys-card"
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                {hovered === i && (
+                  <div className="stat-tooltip">
+                    <p className="stat-story">{m.story}</p>
+                    <p className="stat-context">{m.context}</p>
+                  </div>
+                )}
                 <div className="metric-top">
                   <span className="metric-label">{m.label}</span>
                   <span className="metric-trend" style={{ color: m.color }}>{m.trend}</span>
                 </div>
-                <span className="metric-value" style={{ color: m.color }}>{m.value}</span>
+                <CountUp target={m.target} suffix={m.suffix} decimals={m.decimals} color={m.color} delay={i * 200} />
                 <Sparkline data={m.data} color={m.color} width={160} height={36} />
               </div>
             ))}
@@ -113,12 +133,8 @@ function Hero() {
           </p>
 
           <div className="dash-cta">
-            <button className="cmd-btn cmd-btn-primary" onClick={() => scrollTo('projects')}>
-              ▶ View Systems
-            </button>
-            <a className="cmd-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-              ↓ Resume
-            </a>
+            <button className="cmd-btn cmd-btn-primary" onClick={() => scrollTo('projects')}>▶ View Systems</button>
+            <a className="cmd-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">↓ Resume</a>
           </div>
         </div>
       )}

@@ -7,12 +7,14 @@ const navLinks = [
   { id: 'experience', label: 'logs' },
   { id: 'skills', label: 'skills' },
   { id: 'projects', label: 'systems' },
+  { id: 'status', label: 'status' },
   { id: 'contact', label: 'connect' },
 ]
 
 function Navbar() {
   const [activeSection, setActiveSection] = useState('home')
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,13 +34,14 @@ function Navbar() {
 
   const handleClick = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
   }
 
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         <a className="navbar-logo" href="#home" onClick={() => handleClick('home')}>
-          <span className="logo-bracket">[</span>PRB<span className="logo-bracket">]</span>
+          <span className="logo-bracket">[</span>Pranay<span className="logo-bracket">]</span>
         </a>
         <ul className="navbar-links">
           {navLinks.map(link => (
@@ -53,7 +56,24 @@ function Navbar() {
             </li>
           ))}
         </ul>
+        <button className="mobile-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <span className={`toggle-bar ${menuOpen ? 'open' : ''}`}></span>
+        </button>
       </div>
+      {menuOpen && (
+        <div className="mobile-menu">
+          {navLinks.map(link => (
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              className={activeSection === link.id ? 'active' : ''}
+              onClick={(e) => { e.preventDefault(); handleClick(link.id) }}
+            >
+              <span className="mm-arrow">{'>'}</span> {link.label}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   )
 }

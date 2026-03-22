@@ -16,6 +16,11 @@
   overflow-x: auto;
 }
 .arch-diagram { width: 100%; height: auto; max-height: 70px; }
+.arch-diagram line {
+  stroke-dasharray: 5, 5;
+  animation: dash-flow 1.5s linear infinite;
+}
+@keyframes dash-flow { to { stroke-dashoffset: -10; } }
 
 /* Metrics 2x2 */
 .spc-metrics {

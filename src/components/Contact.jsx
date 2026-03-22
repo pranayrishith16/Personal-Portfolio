@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import './Contact.css'
 
-const commands = {
+const cmdList = {
   help: `Available commands:
   email      → Open email client
   github     → Visit GitHub profile
@@ -26,6 +26,9 @@ Available channels:
 Type 'help' for commands.` },
   ])
   const [input, setInput] = useState('')
+  const [showHints, setShowHints] = useState(false)
+  const [cmdHistory, setCmdHistory] = useState([])
+  const [historyIdx, setHistoryIdx] = useState(-1)
   const inputRef = useRef(null)
   const bodyRef = useRef(null)
 
@@ -33,38 +36,41 @@ Type 'help' for commands.` },
     if (bodyRef.current) bodyRef.current.scrollTop = bodyRef.current.scrollHeight
   }, [history])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const cmd = input.trim().toLowerCase()
-    const newHistory = [...history, { type: 'input', text: `pranay@portfolio:~$ ${input}` }]
+  const execute = (cmd) => {
+    const newHistory = [...history, { type: 'input', text: `pranay@portfolio:~$ ${cmd}` }]
+    setCmdHistory(prev => [cmd, ...prev])
+    setHistoryIdx(-1)
 
-    if (cmd === 'clear') {
-      setHistory([])
-      setInput('')
-      return
-    }
+    if (cmd === 'clear') { setHistory([]); setInput(''); return }
 
-    const result = commands[cmd]
-    if (result === '__ACTION_EMAIL__') {
-      newHistory.push({ type: 'output', text: 'Opening email client...' })
-      window.open('mailto:pranayrishith@gmail.com')
-    } else if (result === '__ACTION_GITHUB__') {
-      newHistory.push({ type: 'output', text: 'Opening GitHub...' })
-      window.open('https://github.com/pranayrishith16', '_blank')
-    } else if (result === '__ACTION_LINKEDIN__') {
-      newHistory.push({ type: 'output', text: 'Opening LinkedIn...' })
-      window.open('https://linkedin.com/in/pranayrishith', '_blank')
-    } else if (result === '__ACTION_RESUME__') {
-      newHistory.push({ type: 'output', text: 'Downloading resume...' })
-      window.open('/resume.pdf', '_blank')
-    } else if (result) {
-      newHistory.push({ type: 'output', text: result })
-    } else if (cmd) {
-      newHistory.push({ type: 'output', text: `command not found: ${cmd}. Type 'help' for available commands.` })
-    }
+    const result = cmdList[cmd]
+    if (result === '__ACTION_EMAIL__') { newHistory.push({ type: 'output', text: 'Opening email client...' }); window.open('mailto:pranayrishith@gmail.com') }
+    else if (result === '__ACTION_GITHUB__') { newHistory.push({ type: 'output', text: 'Opening GitHub...' }); window.open('https://github.com/pranayrishith16', '_blank') }
+    else if (result === '__ACTION_LINKEDIN__') { newHistory.push({ type: 'output', text: 'Opening LinkedIn...' }); window.open('https://linkedin.com/in/pranayrishith', '_blank') }
+    else if (result === '__ACTION_RESUME__') { newHistory.push({ type: 'output', text: 'Downloading resume...' }); window.open('/resume.pdf', '_blank') }
+    else if (result) { newHistory.push({ type: 'output', text: result }) }
+    else if (cmd) { newHistory.push({ type: 'output', text: `command not found: ${cmd}. Type 'help' for available commands.` }) }
 
     setHistory(newHistory)
     setInput('')
+  }
+
+  const handleSubmit = (e) => { e.preventDefault(); execute(input.trim().toLowerCase()) }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      if (historyIdx < cmdHistory.length - 1) {
+        const i = historyIdx + 1
+        setHistoryIdx(i)
+        setInput(cmdHistory[i])
+      }
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      if (historyIdx > 0) { const i = historyIdx - 1; setHistoryIdx(i); setInput(cmdHistory[i]) }
+      else { setHistoryIdx(-1); setInput('') }
+    }
   }
 
   return (
@@ -94,11 +100,22 @@ Type 'help' for commands.` },
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                onFocus={() => setShowHints(true)}
+                onBlur={() => setTimeout(() => setShowHints(false), 200)}
+                onKeyDown={handleKeyDown}
                 className="ct-input"
                 autoComplete="off"
                 spellCheck="false"
               />
+              <span className="ct-cursor-blink">_</span>
             </form>
+            {showHints && !input && (
+              <div className="ct-hints">
+                Try: {['help','email','github','resume'].map(c => (
+                  <span key={c} className="ct-hint" onClick={() => { setInput(c); execute(c) }}>{c}</span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
