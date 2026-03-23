@@ -53,18 +53,19 @@ const radarAxes = [
   { label: 'Backend', value: 82 },
 ]
 
-function RadarChart() {
+function RadarChart({ data }) {
   const cx = 140, cy = 130, r = 100
-  const n = radarAxes.length
+  const n = Math.max(data.length, 3)
   const toRad = (i) => (Math.PI * 2 * i) / n - Math.PI / 2
 
   const rings = [0.25, 0.5, 0.75, 1]
-  const dataPoints = radarAxes.map((a, i) => {
+  const dataPoints = data.map((a, i) => {
     const angle = toRad(i)
     const dist = (a.value / 100) * r
     return { x: cx + Math.cos(angle) * dist, y: cy + Math.sin(angle) * dist }
   })
-  const dataPath = dataPoints.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ') + 'Z'
+  
+  const polygonPoints = dataPoints.map(p => `${p.x},${p.y}`).join(' ')
 
   return (
     <svg viewBox="0 0 280 260" className="radar-chart">
@@ -76,25 +77,31 @@ function RadarChart() {
             return `${cx + Math.cos(a) * r * scale},${cy + Math.sin(a) * r * scale}`
           }).join(' ')}
           fill="none" stroke="rgba(0,212,255,0.1)" strokeWidth="1"
+          style={{ transition: 'all 0.5s ease' }}
         />
       ))}
-      {radarAxes.map((_, i) => {
+      {data.map((_, i) => {
         const a = toRad(i)
-        return <line key={i} x1={cx} y1={cy} x2={cx + Math.cos(a) * r} y2={cy + Math.sin(a) * r} stroke="rgba(0,212,255,0.08)" strokeWidth="1" />
+        return <line key={i} x1={cx} y1={cy} x2={cx + Math.cos(a) * r} y2={cy + Math.sin(a) * r} stroke="rgba(0,212,255,0.08)" strokeWidth="1" style={{ transition: 'all 0.5s ease' }} />
       })}
-      <polygon points={dataPath.replace(/[MLZ]/g, '').replace(/,/g, ' ').split(' ').reduce((acc, v, i, arr) => {
-        if (i % 2 === 0) return [...acc, `${v},${arr[i+1]}`]
-        return acc
-      }, []).join(' ')} fill="rgba(0,212,255,0.08)" stroke="#00d4ff" strokeWidth="1.5" />
+      
+      <polygon 
+        points={polygonPoints} 
+        fill="rgba(0,212,255,0.08)" 
+        stroke="#00d4ff" 
+        strokeWidth="1.5" 
+        style={{ transition: 'all 0.5s ease' }}
+      />
+      
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r="3" fill="#00d4ff" />
+        <circle key={i} cx={p.x} cy={p.y} r="3" fill="#00d4ff" style={{ transition: 'all 0.5s ease' }} />
       ))}
-      {radarAxes.map((axis, i) => {
+      {data.map((axis, i) => {
         const a = toRad(i)
         const lx = cx + Math.cos(a) * (r + 20)
         const ly = cy + Math.sin(a) * (r + 20)
         return (
-          <text key={i} x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="#8892b0" fontSize="10" fontFamily="var(--font-mono)">
+          <text key={i} x={lx} y={ly} textAnchor="middle" dominantBaseline="middle" fill="#8892b0" fontSize="10" fontFamily="var(--font-mono)" style={{ transition: 'all 0.5s ease' }}>
             {axis.label}
           </text>
         )
@@ -107,6 +114,24 @@ function Skills() {
   const [filter, setFilter] = useState('all')
   const filtered = filter === 'all' ? skills : skills.filter(s => s.cat === filter)
 
+  let activeRadarData = filter === 'all' 
+    ? [
+        { label: 'GenAI', value: 93 },
+        { label: 'MLOps', value: 88 },
+        { label: 'Cloud', value: 87 },
+        { label: 'ML/DL', value: 85 },
+        { label: 'Data Eng', value: 90 },
+        { label: 'Backend', value: 82 },
+      ]
+    : filtered.map(s => ({
+        label: s.name.length > 12 ? s.name.substring(0, 10) + '..' : s.name,
+        value: s.level
+      }))
+
+  if (activeRadarData.length > 0 && activeRadarData.length < 3) {
+    while (activeRadarData.length < 3) activeRadarData.push({ label: '', value: 0 })
+  }
+
   return (
     <section id="skills" className="section skills">
       <div className="container">
@@ -117,7 +142,7 @@ function Skills() {
 
         <div className="skills-layout animate-on-scroll">
           <div className="skills-radar">
-            <RadarChart />
+            <RadarChart data={activeRadarData} />
           </div>
 
           <div className="skills-list">
