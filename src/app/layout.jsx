@@ -4,7 +4,12 @@ import { Inter, Space_Grotesk, Fira_Code } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-body' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-heading' })
-const firaCode = Fira_Code({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '500', '600', '700'] })
+const firaCode = Fira_Code({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  weight: ['400', '500', '600', '700'],
+  display: 'optional',
+})
 
 export const metadata = {
   title: 'Pranay Rishith Bondugula | ML Engineer & Data Scientist',
