@@ -21,7 +21,6 @@ export const metadata = {
     description: 'ML Engineer · GenAI · RAG · MLOps · Accenture',
     url: 'https://pranayrishith.com',
     siteName: 'Pranay Bondugula',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Pranay Bondugula – ML Engineer' }],
     type: 'website',
     locale: 'en_US',
   },
@@ -29,7 +28,6 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Pranay Rishith Bondugula | ML Engineer',
     description: 'ML Engineer · GenAI · RAG · MLOps',
-    images: ['/og-image.png'],
   },
   robots: { index: true, follow: true },
 }
