@@ -1,24 +1,56 @@
 import './globals.css'
 import Script from 'next/script'
+import { Inter, Space_Grotesk, Fira_Code } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-body' })
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-heading' })
+const firaCode = Fira_Code({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '500', '600', '700'] })
 
 export const metadata = {
-  title: 'Pranay Rishith Bondugula | ML & MLOps Engineer, Data Scientist',
-  description: 'Portfolio of Pranay Rishith Bondugula, an ML & MLOps Engineer and Data Scientist building production AI systems, RAG pipelines, and edge AI solutions.',
+  title: 'Pranay Rishith Bondugula | ML Engineer & Data Scientist',
+  description: 'ML Engineer at Accenture building production RAG systems, LLM fine-tuning pipelines, and MLOps infrastructure. 4+ years shipping AI to 50K+ devices.',
+  metadataBase: new URL('https://pranayrishith.com'),
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Pranay Rishith Bondugula | ML Engineer',
+    description: 'ML Engineer · GenAI · RAG · MLOps · Accenture',
+    url: 'https://pranayrishith.com',
+    siteName: 'Pranay Bondugula',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Pranay Bondugula – ML Engineer' }],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pranay Rishith Bondugula | ML Engineer',
+    description: 'ML Engineer · GenAI · RAG · MLOps',
+    images: ['/og-image.png'],
+  },
+  robots: { index: true, follow: true },
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Pranay Rishith Bondugula',
+  url: 'https://pranayrishith.com',
+  jobTitle: 'ML Engineer',
+  worksFor: { '@type': 'Organization', name: 'Accenture' },
+  alumniOf: { '@type': 'CollegeOrUniversity', name: 'University of North Texas' },
+  sameAs: [
+    'https://linkedin.com/in/pranayrishith16',
+    'https://github.com/pranayrishith16',
+  ],
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${firaCode.variable}`}>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Script strategy="afterInteractive" src="https://www.googletagmanager.com/gtag/js?id=G-X9WXFHQNCV" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
