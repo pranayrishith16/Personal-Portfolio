@@ -23,6 +23,7 @@ export default function Image() {
         >
             <div
                 style={{
+                    display: 'flex',
                     color: '#4a5568',
                     fontSize: 18,
                     marginBottom: 16,
@@ -32,6 +33,7 @@ export default function Image() {
             </div>
             <div
                 style={{
+                    display: 'flex',
                     color: '#00d4ff',
                     fontSize: 64,
                     fontWeight: 700,
@@ -43,6 +45,7 @@ export default function Image() {
             </div>
             <div
                 style={{
+                    display: 'flex',
                     color: '#8892b0',
                     fontSize: 28,
                     marginBottom: 40,
@@ -67,6 +70,7 @@ export default function Image() {
             </div>
             <div
                 style={{
+                    display: 'flex',
                     position: 'absolute',
                     bottom: 40,
                     right: 80,
