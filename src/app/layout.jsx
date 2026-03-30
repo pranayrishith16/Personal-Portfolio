@@ -1,6 +1,7 @@
 import './globals.css'
 import Script from 'next/script'
 import { Inter, Space_Grotesk, Fira_Code } from 'next/font/google'
+import CookieConsent from '../components/CookieConsent'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-body' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-heading' })
@@ -64,6 +65,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
         {children}
+        <CookieConsent />
       </body>
     </html>
   )

@@ -7,14 +7,14 @@ import About from '../components/About'
 import Experience from '../components/Experience'
 import Skills from '../components/Skills'
 import Projects from '../components/Projects'
-import StatusDashboard from '../components/StatusDashboard'
+import Blog from '../components/Blog'
 import Contact from '../components/Contact'
 
 export default function Home() {
   useEffect(() => {
     // Console easter egg
     console.log(
-      `%c[SYSTEM] Portfolio loaded successfully\n%cBuild: v3.0.0-nextjs-migration\n%cIf you're reading this, let's talk: pranayrishith@gmail.com\n\n%cStack: React + Next.js + Fira Code + way too much caffeine`,
+      `%c[SYSTEM] Portfolio loaded successfully\n%cBuild: v3.0.0-nextjs-migration\n%cIf you're reading this, let's talk: pranayrishith.usa@gmail.com\n\n%cStack: React + Next.js + Fira Code + way too much caffeine`,
       'color: #00ff88; font-weight: bold; font-size: 14px',
       'color: #8892b0',
       'color: #00d4ff',
@@ -42,7 +42,7 @@ export default function Home() {
         <Experience />
         <Skills />
         <Projects />
-        <StatusDashboard />
+        <Blog />
         <Contact />
       </main>
     </>

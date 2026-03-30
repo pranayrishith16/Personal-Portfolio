@@ -5,8 +5,8 @@ const projects = [
   {
     title: 'Legal Document RAG System',
     type: 'GenAI · RAG Pipeline',
-    status: 'PRODUCTION',
-    statusColor: '#00ff88',
+    status: 'PERSONAL PROJECT',
+    statusColor: '#6366f1',
     metrics: [
       { label: 'Accuracy', value: '94%' },
       { label: 'Response', value: '<1s' },
@@ -73,11 +73,11 @@ const projects = [
       </svg>
     ),
     deepDive: [
-      'PySpark ETL on AWS EMR: CAN bus + OBD-II sensor streams',
-      'Feature engineering: rolling windows, FFT, signal correlations',
-      'ResNet-18 CNN + XGBoost ensemble for anomaly classification',
-      'TF Lite INT8 quantization for ARM Cortex-A deployment',
-      'Drowsiness detection improved 71% → 82% via transfer learning',
+      'Built scalable data ingestion and processing pipelines for high-volume real-time sensor streams',
+      'Performed feature engineering on time-series data including rolling statistics and frequency-domain features',
+      'Trained and evaluated an ensemble of neural network and gradient boosting models for anomaly classification',
+      'Iteratively improved model accuracy through cross-validation, hyperparameter tuning, and transfer learning',
+      'Deployed models to production and validated performance against real-world labeled outcomes',
     ],
   },
   {
@@ -128,9 +128,9 @@ function Projects() {
     <section id="projects" className="section projects">
       <div className="container">
         <div className="animate-on-scroll">
-          <span className="section-label">deployments</span>
-          <h2 className="section-title">Production <span style={{ color: 'var(--cyan)' }}>Systems</span></h2>
-          <p className="section-subtitle">Systems I've built, deployed, and monitored in production.</p>
+          <span className="section-eyebrow">Projects</span>
+          <h2 className="section-title">Selected <span className="grad-text">Work</span></h2>
+          <p className="section-sub">A sample of projects — from data pipelines and model training to production AI systems.</p>
         </div>
 
         <div className="sys-cards">
@@ -138,7 +138,7 @@ function Projects() {
             <div key={p.title} className="sys-project-card sys-card animate-on-scroll" style={{ transitionDelay: `${i * 0.1}s` }}>
               <div className="spc-header">
                 <div className="spc-status">
-                  <span className="status-badge status-badge--live">{p.status}</span>
+                  <span className={`status-badge ${p.status === 'PRODUCTION' ? 'status-badge--live' : 'status-badge--personal'}`}>{p.status}</span>
                   <span className="spc-type">{p.type}</span>
                 </div>
                 <h3 className="spc-title">{p.title}</h3>

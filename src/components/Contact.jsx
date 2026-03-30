@@ -6,12 +6,10 @@ const cmdList = {
   email      → Open email client
   github     → Visit GitHub profile
   linkedin   → Visit LinkedIn profile
-  resume     → Download resume
   clear      → Clear terminal`,
   email: '__ACTION_EMAIL__',
   github: '__ACTION_GITHUB__',
   linkedin: '__ACTION_LINKEDIN__',
-  resume: '__ACTION_RESUME__',
 }
 
 function Contact() {
@@ -19,7 +17,7 @@ function Contact() {
     { type: 'output', text: `pranay@portfolio:~$ get_in_touch
 
 Available channels:
-  email    → pranayrishith@gmail.com
+  email    → pranayrishith.usa@gmail.com
   github   → github.com/pranayrishith16
   linkedin → linkedin.com/in/pranayrishith
 
@@ -44,10 +42,9 @@ Type 'help' for commands.` },
     if (cmd === 'clear') { setHistory([]); setInput(''); return }
 
     const result = cmdList[cmd]
-    if (result === '__ACTION_EMAIL__') { newHistory.push({ type: 'output', text: 'Opening email client...' }); window.open('mailto:pranayrishith@gmail.com') }
+    if (result === '__ACTION_EMAIL__') { newHistory.push({ type: 'output', text: 'Opening email client...' }); window.open('mailto:pranayrishith.usa@gmail.com') }
     else if (result === '__ACTION_GITHUB__') { newHistory.push({ type: 'output', text: 'Opening GitHub...' }); window.open('https://github.com/pranayrishith16', '_blank') }
     else if (result === '__ACTION_LINKEDIN__') { newHistory.push({ type: 'output', text: 'Opening LinkedIn...' }); window.open('https://linkedin.com/in/pranayrishith', '_blank') }
-    else if (result === '__ACTION_RESUME__') { newHistory.push({ type: 'output', text: 'Downloading resume...' }); window.open('/resume.pdf', '_blank') }
     else if (result) { newHistory.push({ type: 'output', text: result }) }
     else if (cmd) { newHistory.push({ type: 'output', text: `command not found: ${cmd}. Type 'help' for available commands.` }) }
 
@@ -111,7 +108,7 @@ Type 'help' for commands.` },
             </form>
             {showHints && !input && (
               <div className="ct-hints">
-                Try: {['help','email','github','resume'].map(c => (
+                Try: {['help','email','github','linkedin'].map(c => (
                   <span key={c} className="ct-hint" onClick={() => { setInput(c); execute(c) }}>{c}</span>
                 ))}
               </div>
@@ -120,10 +117,9 @@ Type 'help' for commands.` },
         </div>
 
         <div className="contact-quick animate-on-scroll">
-          <a className="cmd-btn" href="mailto:pranayrishith@gmail.com">✉ Email</a>
+          <a className="cmd-btn" href="mailto:pranayrishith.usa@gmail.com">✉ Email</a>
           <a className="cmd-btn" href="https://github.com/pranayrishith16" target="_blank" rel="noopener noreferrer">⌘ GitHub</a>
           <a className="cmd-btn" href="https://linkedin.com/in/pranayrishith" target="_blank" rel="noopener noreferrer">∞ LinkedIn</a>
-          <a className="cmd-btn" href="/resume.pdf" target="_blank" rel="noopener noreferrer">↓ Resume</a>
         </div>
 
         <footer className="new-footer">

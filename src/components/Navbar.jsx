@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import './Navbar.css'
 
 const navLinks = [
-  { id: 'home', label: 'home' },
-  { id: 'about', label: 'about' },
-  { id: 'experience', label: 'logs' },
-  { id: 'skills', label: 'skills' },
-  { id: 'projects', label: 'systems' },
-  { id: 'status', label: 'status' },
-  { id: 'contact', label: 'connect' },
+  { id: 'home',       label: 'Home'       },
+  { id: 'about',      label: 'About'      },
+  { id: 'experience', label: 'Experience' },
+  { id: 'skills',     label: 'Skills'     },
+  { id: 'projects',   label: 'Projects'   },
+  { id: 'blog',       label: 'Blog'       },
+  { id: 'contact',    label: 'Contact'    },
 ]
 
 function Navbar() {

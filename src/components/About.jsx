@@ -1,51 +1,75 @@
 import './About.css'
 
-const codeLines = [
-  { num: 1, content: <><span className="kw">interface</span> <span className="type">MLEngineer</span> {'{'}</> },
-  { num: 2, content: <>&nbsp;&nbsp;<span className="prop">name</span>: <span className="str">"Pranay Rishith Bondugula"</span></> },
-  { num: 3, content: <>&nbsp;&nbsp;<span className="prop">focus</span>: <span className="str">"Production ML Systems"</span></> },
-  { num: 4, content: <>&nbsp;&nbsp;<span className="prop">experience</span>: <span className="num">4</span><span className="kw">+</span> <span className="cmt">// years</span></> },
-  { num: 5, content: '' },
-  { num: 6, content: <>&nbsp;&nbsp;<span className="prop">currentStack</span>: {'{'}</> },
-  { num: 7, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">GenAI</span>: [<span className="str">"RAG Pipelines"</span>, <span className="str">"LLM Fine-tuning"</span>],</> },
-  { num: 8, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">MLOps</span>: [<span className="str">"Kubernetes"</span>, <span className="str">"Docker"</span>, <span className="str">"CI/CD"</span>],</> },
-  { num: 9, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">Scale</span>: [<span className="str">"1TB+ daily"</span>, <span className="str">"50K+ edge devices"</span>]</> },
-  { num: 10, content: <>&nbsp;&nbsp;{'}'}</> },
-  { num: 11, content: '' },
-  { num: 12, content: <>&nbsp;&nbsp;<span className="prop">provenImpact</span>: {'{'}</> },
-  { num: 13, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">uptime</span>: <span className="str">"99.5%"</span>,</> },
-  { num: 14, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">latencyReduction</span>: <span className="str">"4 hours → 2 minutes"</span>,</> },
-  { num: 15, content: <>&nbsp;&nbsp;&nbsp;&nbsp;<span className="prop">accuracyGain</span>: <span className="str">"71% → 84%"</span></> },
-  { num: 16, content: <>&nbsp;&nbsp;{'}'}</> },
-  { num: 17, content: '}' },
+const pillars = [
+  {
+    icon: '📊',
+    title: 'Data & Analysis',
+    color: '#06b6d4',
+    items: ['Large-scale data pipelines', 'Feature engineering', 'Statistical modeling', 'A/B experimentation', 'EDA & visualization'],
+  },
+  {
+    icon: '🧠',
+    title: 'Modeling & AI',
+    color: '#6366f1',
+    items: ['Supervised & unsupervised ML', 'Deep learning & NLP', 'GenAI & LLMs', 'RAG & fine-tuning', 'Model evaluation & iteration'],
+  },
+  {
+    icon: '🚀',
+    title: 'Deployment & Scale',
+    color: '#10b981',
+    items: ['Production ML systems', 'Model monitoring & reliability', 'API development', 'Cloud infrastructure', 'End-to-end ML lifecycle'],
+  },
 ]
 
-function About() {
+export default function About() {
   return (
-    <section id="about" className="section about">
+    <section id="about" className="section about-section">
       <div className="container">
-        <div className="animate-on-scroll">
-          <span className="section-label">about.ts</span>
-          <h2 className="section-title">System <span style={{ color: 'var(--cyan)' }}>Profile</span></h2>
-        </div>
-        <div className="code-editor sys-card animate-on-scroll">
-          <div className="editor-header">
-            <div className="editor-dots">
-              <span className="dot dot-red"></span>
-              <span className="dot dot-yellow"></span>
-              <span className="dot dot-green"></span>
-            </div>
-            <div className="editor-tabs">
-              <span className="editor-tab active">README.md</span>
-              <span className="editor-tab">experience.json</span>
-              <span className="editor-tab">skills.yaml</span>
-            </div>
+        <div className="about-grid">
+          {/* Left — text */}
+          <div className="about-left animate-on-scroll">
+            <span className="section-eyebrow">About</span>
+            <h2 className="section-title">
+              Building with Data,<br />
+              <span className="grad-text">End to End</span>
+            </h2>
+            <p className="about-body">
+              I'm a Data Scientist with 4 years of hands-on experience across the
+              full AI/ML lifecycle — from collecting and transforming raw data, to
+              training and evaluating models, to shipping them into production where
+              they handle real workloads.
+            </p>
+            <p className="about-body">
+              At <strong>Accenture</strong>, I worked on GenAI systems powered by large language models —
+              designing retrieval systems, running experiments to improve output quality,
+              and monitoring their behavior in production. At{' '}
+              <strong>Harman International</strong>, I built data pipelines and ML models
+              that processed high-volume sensor data and produced real-time predictions
+              across a large fleet of connected devices.
+            </p>
+            <p className="about-body">
+              I'm most effective when I can move across the problem — working with data,
+              building models, and making sure those models actually run and stay healthy
+              in production. I hold an M.S. in Data Science from the University of North Texas.
+            </p>
           </div>
-          <div className="editor-body">
-            {codeLines.map((line) => (
-              <div key={line.num} className="code-line">
-                <span className="line-num">{line.num}</span>
-                <span className="line-content">{line.content || '\u00A0'}</span>
+
+          {/* Right — pillars */}
+          <div className="about-right animate-on-scroll">
+            {pillars.map(p => (
+              <div key={p.title} className="pillar-card card">
+                <div className="pillar-head">
+                  <span className="pillar-icon">{p.icon}</span>
+                  <h3 className="pillar-title" style={{ color: p.color }}>{p.title}</h3>
+                </div>
+                <ul className="pillar-items">
+                  {p.items.map(item => (
+                    <li key={item} className="pillar-item">
+                      <span className="pillar-dot" style={{ background: p.color }}></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -54,5 +78,3 @@ function About() {
     </section>
   )
 }
-
-export default About
